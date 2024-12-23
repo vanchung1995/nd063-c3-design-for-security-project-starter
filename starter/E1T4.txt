@@ -1,5 +1,11 @@
 Based on the architecture diagram, and the steps you have taken so far to upload data and access the application web service, identify at least 2 obvious poor practices as it relates to security.  Include justification.
 
 # Poor practice 1
+- Problem: Using HTTP instead of HTTPS makes the load balancer insecure because HTTP does not encrypt data during transmission. Additionally, since the load balancer is placed before the web server, the web server should not be exposed to the entire Internet. This lack of protection increases vulnerability to common attacks, such as DoS (Denial of Service).
+
+- Justification: Update the Security Group (SG) of the web server to only allow traffic from the load balancer. Additionally, configure the load balancer to use HTTPS instead of HTTP.
 
 # Poor practice 2
+- Problem: Traffic between EC2 and S3 is routed via the Internet, which may not be protected against attacks such as Man-in-the-Middle (MitM).
+
+- Justification: Use a VPC Endpoint for S3 to establish a private connection between EC2 and S3, avoiding exposure to the Internet.
