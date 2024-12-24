@@ -1,3 +1,9 @@
 Research and analyze which of the vulnerabilities appear to be related to the code that was deployed for the environment in this project.
 
 Bonus - provide recommendations on how to remediate the vulnerabilities.
+- The InstanceRole of the web server should not have full permissions for S3; it should be restricted to only the actions required to handle specific tasks.
+- The WebAppSG should not expose many ports. Only necessary ports should be open, and access should be restricted to the load balancer instead of the entire internet.
+- The AppLoadBalancerSG should use HTTPS and expose only port 443, replacing HTTP on port 80.
+- EC2 instances should be placed in private subnets instead of public subnets.
+- A VPC Endpoint for S3 should be configured to allow secure connectivity between EC2 and S3 without traversing the public internet.
+- Encryption at rest should be enabled for EBS volumes to enhance data security.
