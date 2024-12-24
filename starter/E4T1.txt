@@ -8,4 +8,5 @@
 - Set up the bastion host to enable SSH access to this EC2 instance.
 
 # Neither instance should have had access to the secret recipes bucket, in the even that instance API credentials were compromised how could we have prevented access to sensitive data.
-Modify the bucket policy of the S3 bucket to allow only specific users to perform specific actions, such as GetObject, ListBucket, etc.
+- Modify role of web server to allow only list bucket and get object from free s3
+- Modify the bucket policy of the S3 bucket to allow only specific users to perform specific actions, such as GetObject, ListBucket, etc.
