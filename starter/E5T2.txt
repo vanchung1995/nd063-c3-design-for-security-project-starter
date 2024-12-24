@@ -1,13 +1,23 @@
 # Identify tools that will allow you to do the following:
 
 ## Scan infrastructure as code templates
+- Terrascan
+- Checkov
+- tfsec
+- TFLint
 
 ### Example vulnerability
+- Exposing unnecessary ports in a security group.
+- Allowing * (wildcard) permissions on an S3 bucket.
 
 ##Scan AMI’s or containers for OS vulnerabilities
+- Amazon Inspector
 
 ### Example vulnerability
+- A container image contains an outdated OpenSSL library with a critical vulnerability
 
 ##Scan an AWS environment for cloud configuration vulnerabilities
+- AWS Security Hub
 
 ### Example vulnerability
+- IAM user has AdministratorAccess permission attached directly, violating the principle of least privilege.
