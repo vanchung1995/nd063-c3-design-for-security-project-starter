@@ -1,5 +1,11 @@
 
 
 # Identify 2-3 changes that can be made to our environment to prevent an ssh brute force attack from the internet.
+- Move the EC2 web server to a private subnet.
+- Modify the security group of the web server EC2 instance to allow only:
+  - Port 5000 traffic from the security group of the load balancer.
+  - Port 22 traffic from the bastion host.
+- Set up the bastion host to enable SSH access to this EC2 instance.
 
 # Neither instance should have had access to the secret recipes bucket, in the even that instance API credentials were compromised how could we have prevented access to sensitive data.
+Modify the bucket policy of the S3 bucket to allow only specific users to perform specific actions, such as GetObject, ListBucket, etc.
