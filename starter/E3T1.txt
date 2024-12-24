@@ -1,3 +1,30 @@
 # Describe GuardDuty findings that were detected related to the brute force attack
+I followed the guide, but GuardDuty only shows low-severity findings and not any brute force findings. I waited 10 hours, but nothing changed. I read the Q&A section and noticed that many other users have faced the same problem.
 
 # Research the AWS Guard Duty documentation page and explain how GuardDuty may have detected this attack - i.e. what was its source of information.
+GuardDuty uses multiple data sources to detect potential threats, such as VPC Flow Logs, DNS logs, and CloudTrail event logs.
+
+Below are some samples from the VPC Flow Logs:
+
+- 10.192.11.63: The IP address of the attacking EC2 instance.
+- 10.192.10.25: The IP address of the target web server EC2 instance.
+
+  C:\Users\Naruto\Downloads\730554764003_vpcflowlogs_us-east-1_fl-03db6434c8de0148e_20241224T0800Z_048a40cb.log\730554764003_vpcflowlogs_us-east-1_fl-03db6434c8de0148e_20241224T0800Z_048a40cb.log (102 hits)
+	Line   4: 2 730554764003 eni-00d9f19697a67756d 10.192.11.63 10.192.10.25 44130 22 6 21 2466 1735027171 1735027200 ACCEPT OK
+	Line   5: 2 730554764003 eni-00d9f19697a67756d 10.192.11.63 10.192.10.25 59546 22 6 22 2518 1735027171 1735027200 ACCEPT OK
+	Line   7: 2 730554764003 eni-00d9f19697a67756d 10.192.11.63 10.192.10.25 47402 22 6 26 2726 1735027171 1735027200 ACCEPT OK
+	Line  13: 2 730554764003 eni-00d9f19697a67756d 10.192.11.63 10.192.10.25 47512 22 6 20 2430 1735027171 1735027200 ACCEPT OK
+	Line  16: 2 730554764003 eni-00d9f19697a67756d 10.192.11.63 10.192.10.25 59628 22 6 4 238 1735027171 1735027200 ACCEPT OK
+	Line  17: 2 730554764003 eni-00d9f19697a67756d 10.192.11.63 10.192.10.25 59534 22 6 14 1622 1735027171 1735027200 ACCEPT OK
+	Line  18: 2 730554764003 eni-00d9f19697a67756d 10.192.11.63 10.192.10.25 59666 22 6 17 2162 1735027171 1735027200 ACCEPT OK
+	Line  19: 2 730554764003 eni-00d9f19697a67756d 10.192.11.63 10.192.10.25 43998 22 6 20 2414 1735027171 1735027200 ACCEPT OK
+	Line  21: 2 730554764003 eni-00d9f19697a67756d 10.192.11.63 10.192.10.25 59592 22 6 22 2518 1735027171 1735027200 ACCEPT OK
+	Line  24: 2 730554764003 eni-00d9f19697a67756d 10.192.11.63 10.192.10.25 42944 22 6 22 2518 1735027171 1735027200 ACCEPT OK
+	Line  26: 2 730554764003 eni-00d9f19697a67756d 10.192.11.63 10.192.10.25 42850 22 6 22 2534 1735027171 1735027200 ACCEPT OK
+	Line  27: 2 730554764003 eni-00d9f19697a67756d 10.192.11.63 10.192.10.25 59512 22 6 22 2518 1735027171 1735027200 ACCEPT OK
+	Line  28: 2 730554764003 eni-00d9f19697a67756d 10.192.11.63 10.192.10.25 44032 22 6 20 2414 1735027171 1735027200 ACCEPT OK
+	Line  31: 2 730554764003 eni-00d9f19697a67756d 10.192.11.63 10.192.10.25 44062 22 6 20 2430 1735027171 1735027200 ACCEPT OK
+	Line  32: 2 730554764003 eni-00d9f19697a67756d 10.192.11.63 10.192.10.25 42920 22 6 22 2534 1735027171 1735027200 ACCEPT OK
+  ................
+
+From these logs, we observe multiple requests from the attacking EC2 instance (10.192.11.63) to the web server EC2 instance (10.192.10.25) on port 22 (SSH) over a short time frame. This indicates repeated connection attempts, which resemble a brute force attack.
